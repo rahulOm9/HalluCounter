@@ -13,7 +13,7 @@ from hallucounter.detector import load_classifier, get_predictions, get_pipeline
 from hallucounter.nli_scores import load_nli_model, get_nli_scores
 
 ### Load Classifier
-clf = load_classifier('path_to_classification_model_file')
+clf = load_classifier('./model_weights/jeopardy_ML_classifier.joblib') # Alternatively, you can use: './model_weights/kaggle_ML_classifier.joblib'
 
 ### Load NLI Cross-Encoder
 nli_model, nli_tokenizer = load_nli_model() # takes optional parameter model_name. Unless specified, it uses nli-deberta-v3-large by default
