@@ -32,3 +32,18 @@ print("Overall Prediction:", overall_prediction)
 print("Optimal Response:", optimal_response)
 print("Confidence Score:", confidence_score)
 ```
+### License
+Our materials are released under the CC-BY-4.0, in other words, these can be freely shared and adapted as long as appropriate credit is given. Full license: https://creativecommons.org/licenses/by/4.0/.
+
+### Reference
+If you use our code or corpus, please kindly cite:
+
+```
+@article{urlana2025hallucounter,
+  title={HalluCounter: Reference-free LLM Hallucination Detection in the Wild!},
+  author={Urlana, Ashok and Kanumolu, Gopichand and Kumar, Charaka Vinayak and Garlapati, Bala Mallikarjunarao and Mishra, Rahul},
+  journal={arXiv preprint arXiv:2503.04615},
+  year={2025}
+  url={https://arxiv.org/abs/2503.04615}
+}
+```
