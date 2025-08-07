@@ -32,6 +32,25 @@ print("Overall Prediction:", overall_prediction)
 print("Optimal Response:", optimal_response)
 print("Confidence Score:", confidence_score)
 ```
+
+# HalluCounterEval Dataset
+
+```
+from datasets import load_dataset
+
+# Load the Jeopardy configuration using its specific name
+jeopardy_dataset = load_dataset("ashokurlana/HalluCounterEval", name="HalluCounterEval_Jeopardy")
+
+# Load the Kaggle configuration
+kaggle_dataset = load_dataset("ashokurlana/HalluCounterEval", name="HalluCounterEval_Kaggle")
+
+# Each dataset has a 'train' split
+print("--- Jeopardy Sample ---")
+print(jeopardy_dataset["train"][0])
+
+print("\n--- Kaggle Sample ---")
+print(kaggle_dataset["train"][0])
+```
 ### License
 Our materials are released under the CC-BY-4.0, in other words, these can be freely shared and adapted as long as appropriate credit is given. Full license: https://creativecommons.org/licenses/by/4.0/.
 
