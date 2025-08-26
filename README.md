@@ -3,7 +3,7 @@ This repository contains the code for **HalluCounter**, a novel method for detec
 
 # Installation
 ```
-pip install hallucounter
+pip install -r requirements.txt
 ```
 
 # Hallucounter Usage
