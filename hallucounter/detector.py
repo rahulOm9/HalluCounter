@@ -35,32 +35,52 @@ def get_pipeline_output(nli_scores,clf,responses):
     overall_prediction='1' if count_1> count_0 else '0'
     overall_predictions.append(overall_prediction)
 
-    def get_ent_cont_scores(score):
-        contradiction_score=0.3*score[1]+0.7*score[3]
-        entailment_score=0.3*score[0]+0.7*score[2]
+    # ##### made changes ####################
+    def get_ent_cont_scores(feature_name,score):
+        if feature_name=='NLI_Features':
+            contradiction_score=0.3*score[2]+0.7*score[5]
+            entailment_score=0.3*score[0]+0.7*score[3]
+        elif feature_name=='NLI_Features_V1':
+            contradiction_score=score[2]
+            entailment_score=score[0]
+        elif feature_name=='NLI_Features_V2':
+            contradiction_score=score[2]
+            entailment_score=score[0]
+        elif feature_name=='NLI_Features_V3':
+            contradiction_score=0.3*score[1]+0.7*score[3]
+            entailment_score=0.3*score[0]+0.7*score[2]
+        else:
+            contradiction_score=0.3*score[0]+0.7*score[1]
+            entailment_score=0
         return entailment_score, contradiction_score
 
     if overall_prediction=='1':
+        hallu_responses=[r for idx,r in enumerate(responses) if predictions[idx]=='1']
+        hallu_nli_scores=[s for idx,s in enumerate(nli_scores) if predictions[idx]=='1']
         confidence_score=count_1/len(predictions)
         contradiction_scores=[]
-        for score in nli_scores:
-            _, cont_score =get_ent_cont_scores(score)
+        for score in hallu_nli_scores:
+            _, cont_score =get_ent_cont_scores(feature_name,score)
             contradiction_scores.append(cont_score)
         optimal_response_index=np.argmin(contradiction_scores)
+        optimal_response=hallu_responses[optimal_response_index]
     else:
+        non_hallu_responses=[r for idx,r in enumerate(responses) if predictions[idx]=='0']
+        non_hallu_nli_scores=[s for idx,s in enumerate(nli_scores) if predictions[idx]=='0']
         confidence_score=count_0/len(predictions)
         entailment_scores=[]
-        for score in nli_scores:
-            ent_score, _ =get_ent_cont_scores(score)
+        for score in non_hallu_nli_scores:
+            ent_score, _ =get_ent_cont_scores(feature_name,score)
             entailment_scores.append(ent_score)
         optimal_response_index=np.argmax(entailment_scores)
-
-
-
-    confidence_scores.append(confidence_score*100)
-    optimal_response=responses[optimal_response_index]
+        optimal_response=non_hallu_responses[optimal_response_index]
+    
+    
+    confidence_scores.append(confidence_score)
+    # optimal_response=responses[optimal_response_index]
     optimal_responses.append(optimal_response)
-    overall_predictions=['hallucination' if i=='1' else 'no-hallucination' for i in overall_predictions ]
+
+
     return overall_predictions[0], confidence_scores[0], optimal_responses[0]
 
 
